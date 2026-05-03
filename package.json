@@ -1,0 +1,11 @@
+{
+  "name": "kilo-provider-extension",
+  "version": "1.0.0",
+  "description": "Minimal Kilo provider extension for Pi",
+  "main": "index.ts",
+  "dependencies": {},
+  "devDependencies": {},
+  "pi": {
+    "extensions": ["./index.ts"]
+  }
+}
