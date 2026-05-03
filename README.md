@@ -18,7 +18,7 @@ A minimal Pi extension that provides access to Kilo AI models via the Kilo Gatew
 - ✅ Model status in status bar
 - ✅ Automatic model fetching at startup
 
-> **Note:** This is a minimal extraction from pi-free. Some features may be simplified compared to the full implementation.
+> **Note:** This is a minimal extraction from pi-free. Several features are simplified or removed — see details below.
 
 ## Installation
 
@@ -62,9 +62,20 @@ dima/
 - `KILO_API_KEY` - API key for Kilo (optional, for paid models)
 - `KILO_API_URL` - Custom Kilo API URL (defaults to https://api.kilo.ai)
 
-## Notes
+## What's Different from pi-free
 
-This is a minimal extraction of the Kilo provider from the [pi-free](https://github.com/apmantza/pi-free) project.
-Some features may be simplified compared to the full implementation in pi-free.
+This is a minimal extraction of the Kilo provider from the [pi-free](https://github.com/apmantza/pi-free) project. The following features are **not included** compared to the full pi-free implementation:
 
-For the full-featured version with additional providers and features, check out the complete pi-free project.
+- **No additional providers** — pi-free includes Cline, NVIDIA, Ollama Cloud, ZenMux, CrofAI, and dynamic built-in provider toggles (Mistral, Groq, Cerebras, xAI, Hugging Face)
+- **No global free-only toggle** (`/toggle-free`) — only per-provider `/toggle-kilo` is available
+- **No `/free-providers` command** — the global provider overview is not included
+- **No config persistence** — toggle state is not saved across sessions
+- **No Coding Index model name enhancement** — model names are not annotated with benchmark scores
+- **No automatic pricing detection** — the Route A/B heuristic for detecting whether a provider exposes real pricing is not included
+- **No model size filtering** — the `isUsableModel` / `parseModelSize` utilities for filtering small models are not included
+- **No shared fetch utilities** — `fetchWithTimeout`, `fetchWithRetry`, and `parseModelResponse` are not included; model fetching uses a simplified inline implementation
+- **No `turn_end` error handling hooks** — provider-specific error handling on assistant errors is not wired up
+- **No `setupProvider` helper** — the unified provider setup with automatic ToS notices, status bar, and toggle commands is replaced with manual inline registration
+- **Hardcoded fallback models** — if model fetching fails, a single fallback model is returned instead of graceful degradation
+
+For the full-featured version with all providers, global toggles, config persistence, and shared utilities, check out the complete [pi-free](https://github.com/apmantza/pi-free) project.
