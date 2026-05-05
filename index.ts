@@ -181,42 +181,6 @@ export default async function (pi: ExtensionAPI) {
 		},
 	});
 
-	// Status bar + ToS notice on provider selection
-	let tosShown = false;
-	pi.on("model_select", async (_event, ctx) => {
-		if (ctx.model?.provider !== PROVIDER_KILO) {
-			ctx.ui.setStatus(`${PROVIDER_KILO}-status`, undefined);
-			return;
-		}
-
-		// Build status line
-		const free = freeModels.length;
-		const total = allModels.length;
-		const paid = total - free;
-		let status: string;
-		if (paid === 0) {
-			status = `kilo: ${free} free models`;
-		} else if (showPaidModels) {
-			status = `kilo: ${total} models (free + paid)`;
-		} else {
-			status = `kilo: ${free} free · ${paid} paid`;
-		}
-		ctx.ui.setStatus(`${PROVIDER_KILO}-status`, status);
-
-		// ToS notice (once)
-		if (tosShown) return;
-		tosShown = true;
-		const cred = ctx.modelRegistry.authStorage.get(PROVIDER_KILO);
-		if (cred?.type === "oauth") return;
-		const paidCount = allModels.length - freeModels.length;
-		if (paidCount > 0) {
-			ctx.ui.notify(
-				`Kilo: ${freeModels.length} free models shown. Use /toggle-kilo or /login kilo for ${paidCount} paid models. Terms: ${URL_KILO_TOS}`,
-				"info",
-			);
-		}
-	});
-
 	// Refresh models on session start if authenticated
 	pi.on("session_start", async (_event, ctx) => {
 		const cred = ctx.modelRegistry.authStorage.get(PROVIDER_KILO);

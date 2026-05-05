@@ -15,7 +15,6 @@ A minimal Pi extension that provides access to Kilo AI models via the Kilo Gatew
 - ✅ OpenRouter-compatible API
 - ✅ OAuth device authorization flow (`/login kilo`)
 - ✅ Toggle between free/paid models (`/toggle-kilo`)
-- ✅ Model status in status bar
 - ✅ Automatic model fetching at startup
 
 > **Note:** This is a minimal extraction from pi-free. Several features are simplified or removed — see details below.
